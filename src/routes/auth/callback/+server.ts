@@ -38,6 +38,20 @@ export async function GET(event: RequestEvent): Promise<Response> {
         path: ".",
         ...sessionCookie.attributes
       });
+
+      prisma.user.update({
+        where: {
+          id: existingUser.id
+        },
+        select: {
+          avatar_url: true,
+          name: true
+        },
+        data: {
+          avatar_url: githubUser.avatar_url,
+          name: githubUser.name
+        }
+      });
     } else {
       const userId = generateIdFromEntropySize(10);
 
@@ -45,7 +59,9 @@ export async function GET(event: RequestEvent): Promise<Response> {
         data: {
           id: userId,
           github_id: githubUser.id,
-          username: githubUser.login
+          username: githubUser.login,
+          avatar_url: githubUser.avatar_url,
+          name: githubUser.name
         }
       });
 
@@ -79,4 +95,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
 interface GitHubUser {
   id: number;
   login: string;
+  avatar_url: string;
+  name: string;
 }
