@@ -1,19 +1,19 @@
 <script lang="ts">
-	import Highlight from 'svelte-highlight';
-	import typescript from 'svelte-highlight/languages/typescript';
-	import '@catppuccin/highlightjs/css/catppuccin-mocha.css';
+	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
+	import type { PageData } from './$types';
 
-	const code = `
-  import { Router } from '@sveltejs/kit';
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-
-  onMount(() => {
-    page.set({ title: 'Page Route' });
-  });
-  `;
+	export let data: PageData;
 </script>
 
-<div>Welcome to the page route!</div>
+{JSON.stringify(data)}
 
-<Highlight language={typescript} {code} />
+<form method="post" use:enhance>
+	<button>Sign out</button>
+</form>
+
+<button
+	on:click={() => {
+		goto('/auth/login/github');
+	}}>Sign in</button
+>

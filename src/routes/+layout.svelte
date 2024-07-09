@@ -1,24 +1,18 @@
 <script lang="ts">
-	import ThemeSwitch from '$lib/components/ThemeSwitch.svelte';
-
 	import '$lib/app.css';
-
 </script>
 
-<div class="transition-all">
+<main>
 	<header class="flex">
 		<div class="navbar bg-base-200 m-2 rounded-xl flex justify-between">
 			<a class="btn btn-ghost text-xl font-bold" href="/">Practice</a>
 			<nav>
 				<ul class="menu menu-horizontal items-center gap-3">
-					<li>About</li>
-					<li>Portfolio</li>
-					<li>
-						<ThemeSwitch />
-					</li>
+					<li>asd</li>
 				</ul>
 			</nav>
 		</div>
 	</header>
+
 	<slot />
-</div>
+</main>
