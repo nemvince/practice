@@ -29,6 +29,7 @@
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"prisma": "^5.16.2",
+		"rollup-plugin-copy": "^3.5.0",
 		"svelte": "^4.2.7",
 		"svelte-check": "^3.6.0",
 		"tailwindcss": "^3.4.4",
@@ -42,7 +43,12 @@
 		"@fontsource-variable/fira-code": "^5.0.18",
 		"@fontsource/fira-sans": "^5.0.20",
 		"@lucia-auth/adapter-prisma": "^4.0.1",
+		"@tinymce/tinymce-svelte": "^3.0.0",
 		"arctic": "^1.9.1",
-		"postgres": "^3.4.4"
+		"minio": "^8.0.1",
+		"oslo": "^1.2.1",
+		"postgres": "^3.4.4",
+		"svelte-sonner": "^0.3.25",
+		"tinymce": "^7.2.1"
 	}
 }
