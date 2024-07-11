@@ -8,7 +8,7 @@ export default defineConfig({
 		rollupOptions: {
 			plugins: [
 				copy({
-					targets: [{ src: 'node_modules/tinymce/**/*', dest: 'static/tinymce' }]
+					targets: [{ src: 'node_modules/tinymce/**/*', dest: 'static/editor/tinymce' }]
 				})
 			]
 		}
