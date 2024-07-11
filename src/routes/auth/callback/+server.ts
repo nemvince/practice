@@ -72,10 +72,12 @@ export async function GET(event: RequestEvent): Promise<Response> {
 				...sessionCookie.attributes
 			});
 		}
+		const redirectTo = event.cookies.get('github_oauth_redirect') || '/';
+
 		return new Response(null, {
 			status: 302,
 			headers: {
-				Location: '/'
+				Location: redirectTo
 			}
 		});
 	} catch (e) {

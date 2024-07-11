@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Icon from '@iconify/svelte';
 </script>
 
@@ -17,7 +18,7 @@
 			<div class="space-y-4 justify-center flex">
 				<button
 					on:click={() => {
-						goto('/auth/login/github');
+						goto(`/auth/login/github?redirectTo=${$page.url}`);
 					}}
 					class="btn btn-primary"
 				>

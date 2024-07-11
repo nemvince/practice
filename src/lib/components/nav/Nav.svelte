@@ -22,7 +22,10 @@
 				>
 					<ul class="space-y-1">
 						<Item href="/profile" icon="mdi:user" text={user.name || user.username} />
-						<Item href="/settings" icon="mdi:cog" text="Settings" />
+						{#if user.isSiteAdmin}
+							<Item href="/admin/posts" icon="material-symbols:newspaper" text="My posts" />
+							<Item href="/admin/post/new" icon="mdi:plus" text="New post" />
+						{/if}
 						<Item href="/auth/logout" icon="mdi:logout" text="Logout" />
 					</ul>
 				</div>

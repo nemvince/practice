@@ -4,9 +4,15 @@ import { githubAuth } from '$lib/server/auth';
 
 import type { RequestEvent } from '@sveltejs/kit';
 
-export async function GET(event: RequestEvent): Promise<Response> {
+export const GET = async (event: RequestEvent): Promise<Response> => {
 	const state = generateState();
 	const url = await githubAuth.createAuthorizationURL(state);
+	const redirectTo = event.url.searchParams.get('redirectTo');
+
+	event.cookies.set('github_oauth_redirect', redirectTo || "", {
+		path: '/',
+		maxAge: 60 * 10,
+	})
 
 	event.cookies.set('github_oauth_state', state, {
 		path: '/',

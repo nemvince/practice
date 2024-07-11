@@ -19,13 +19,15 @@ export const actions = {
     }
     const data = await request.formData();
 
-    if (!data.has('title') || !data.has('content') || !data.has('files')) {
+    if (!data.has('title') || !data.has('content') || !data.has('files') || !data.has('publish')) {
       return fail(400, { error: 'Bad Request' });
     }
+    console.log(data);
+
 
     const postData: PostData = {
       id: generateRandomString(16, alphabet('A-Z', 'a-z', '0-9')),
-      published: data.get('publish') || false,
+      published: data.get('publish') == "on" ? true : false,
       title: data.get('title'),
       content: data.get('content'),
       author: user.id,
@@ -36,7 +38,6 @@ export const actions = {
       const files = data.getAll('files');
       for (const file of files) {
         const fileObject = file as File;
-        // we need a nodejs buffer to upload to minio
         const arrayBuffer = await fileObject.arrayBuffer();
         const buffer = Buffer.from(new Uint8Array(arrayBuffer));
         const fileID = generateRandomString(16, alphabet('A-Z', 'a-z', '0-9'));
