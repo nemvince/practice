@@ -11,6 +11,7 @@
 		});
 		editor.on('init', () => {
 			editor.setContent(content || '');
+			editor.save();
 		});
 	};
 </script>

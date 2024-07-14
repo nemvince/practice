@@ -46,7 +46,6 @@ export const actions = {
     if (!data.has('title') || !data.has('content') || !data.has('id')) {
       return fail(400, { error: 'Bad Request' });
     }
-    console.log(data);
 
     const postData: PostData = {
       id: data.get('id') as string,
@@ -98,7 +97,6 @@ export const actions = {
         }
       });
 
-      console.log('Post updated: ', post);
       return {
         status: 200,
         body: post

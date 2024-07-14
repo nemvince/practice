@@ -9,8 +9,6 @@ import type { S3Error } from 'minio';
 
 export const actions = {
   default: async ({ request, cookies }) => {
-    console.log("i ran");
-
     const sessionId = cookies.get(lucia.sessionCookieName);
     if (!sessionId) {
       return fail(401, { error: 'No session found' });

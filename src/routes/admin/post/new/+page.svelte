@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import EditorWrapper from '$lib/components/editor/EditorWrapper.svelte';
 
 	import { toast } from 'svelte-sonner';
@@ -8,6 +9,7 @@
 	let title = '';
 	let publish: false;
 	let buttonText = 'Save as draft';
+	let isLoading = false;
 
 	$: buttonText = publish ? 'Publish' : 'Save as draft';
 
@@ -34,19 +36,23 @@
 	enctype="multipart/form-data"
 	class="flex flex-col gap-4 px-8 pt-6"
 	use:enhance={({ formData, cancel }) => {
+		isLoading = true;
 		if (!formData.get('title') || !formData.get('content')) {
 			toast.error(
 				`Please fill all required fields, missing ${!formData.get('title') ? 'title' : 'content'}`
 			);
+			isLoading = false;
 			cancel();
 		}
 
 		return async ({ result }) => {
 			if (result.type === 'success') {
 				toast.success(`Post ${publish ? 'published' : 'saved as draft'}!`);
+				goto('/admin/posts');
 			} else if (result.type === 'failure') {
 				toast.error('Failed to create post');
 			}
+			isLoading = false;
 		};
 	}}
 >
@@ -85,11 +91,16 @@
 		<button
 			type="button"
 			on:click={handleDoneButton}
-			class="btn"
+			class="btn w-32"
 			class:btn-primary={!publish}
 			class:btn-warning={publish}
+			disabled={isLoading}
 		>
-			{buttonText}
+			{#if isLoading}
+				<span class="loading loading-infinity loading-lg"></span>
+			{:else}
+				{buttonText}
+			{/if}
 		</button>
 	</div>
 </form>

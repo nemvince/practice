@@ -6,6 +6,7 @@
 
 	import { toast } from 'svelte-sonner';
 	import type { PageServerData } from './$types';
+	import { goto } from '$app/navigation';
 
 	let form: HTMLFormElement;
 	let title = data.post.title;
@@ -36,6 +37,7 @@
 		return async ({ result }) => {
 			if (result.type === 'success') {
 				toast.success(`Post updated${publish ? ' and published!' : ''}!`);
+				goto(publish ? `/posts/${data.post.id}` : `/admin/posts`)
 			} else if (result.type === 'failure') {
 				toast.error('Failed to update post');
 			}
@@ -51,6 +53,7 @@
 			class="input input-bordered w-full"
 		/>
 
+		<!-- TODO: file editing -->
 		<!-- <input
 			name="files"
 			type="file"
@@ -60,7 +63,7 @@
 	</div>
 
 	<div class="">
-		<textarea name="content" id="editor"></textarea>
+		<textarea name="content" id="editor" class=""></textarea>
 		<EditorWrapper content={postContent} />
 	</div>
 
