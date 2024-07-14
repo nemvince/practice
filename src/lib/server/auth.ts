@@ -11,33 +11,33 @@ const adapter = new PrismaAdapter(prisma.session, prisma.user);
 export const githubAuth = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, {});
 
 export const lucia = new Lucia(adapter, {
-	sessionCookie: {
-		attributes: {
-			secure: !dev
-		}
-	},
-	getUserAttributes: (attributes) => {
-		return {
-			githubId: attributes.github_id,
-			username: attributes.username,
-			avatarUrl: attributes.avatar_url,
-			name: attributes.name,
-			isSiteAdmin: attributes.isSiteAdmin
-		};
-	}
+  sessionCookie: {
+    attributes: {
+      secure: !dev
+    }
+  },
+  getUserAttributes: (attributes) => {
+    return {
+      githubId: attributes.github_id,
+      username: attributes.username,
+      avatarUrl: attributes.avatar_url,
+      name: attributes.name,
+      isSiteAdmin: attributes.isSiteAdmin
+    };
+  }
 });
 
 declare module 'lucia' {
-	interface Register {
-		Lucia: typeof lucia;
-		DatabaseUserAttributes: DatabaseUserAttributes;
-	}
+  interface Register {
+    Lucia: typeof lucia;
+    DatabaseUserAttributes: DatabaseUserAttributes;
+  }
 }
 
 interface DatabaseUserAttributes {
-	github_id: number;
-	username: string;
-	avatar_url: string;
-	name: string;
-	isSiteAdmin: boolean;
+  github_id: number;
+  username: string;
+  avatar_url: string;
+  name: string;
+  isSiteAdmin: boolean;
 }

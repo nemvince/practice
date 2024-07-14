@@ -49,7 +49,7 @@ export const actions = {
 
     const postData: PostData = {
       id: data.get('id') as string,
-      published: data.get('publish') == "on" ? true : false,
+      published: data.get('publish') == 'on' ? true : false,
       title: data.get('title'),
       content: data.get('content'),
       author: user.id,
@@ -92,7 +92,7 @@ export const actions = {
           title: postData.title as string,
           content: postData.content as string,
           published: postData.published,
-          author: { connect: { id: postData.author } },
+          author: { connect: { id: postData.author } }
           // fileIDs: { set: postData.fileIDs }
         }
       });

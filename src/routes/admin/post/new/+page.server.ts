@@ -25,7 +25,7 @@ export const actions = {
 
     const postData: PostData = {
       id: generateRandomString(16, alphabet('A-Z', 'a-z', '0-9')),
-      published: data.get('publish') == "on" ? true : false,
+      published: data.get('publish') == 'on' ? true : false,
       title: data.get('title'),
       content: data.get('content'),
       author: user.id,
@@ -34,23 +34,27 @@ export const actions = {
 
     try {
       const files = data.getAll('files');
+      console.log(files);
+
       for (const file of files) {
         const fileObject = file as File;
-        const arrayBuffer = await fileObject.arrayBuffer();
-        const buffer = Buffer.from(new Uint8Array(arrayBuffer));
-        const fileID = generateRandomString(16, alphabet('A-Z', 'a-z', '0-9'));
-        await minio.putObject(
-          MINIO_BUCKET,
-          fileID,
-          buffer,
-          fileObject.size,
-          function (err: S3Error | null) {
-            if (err) {
-              return fail(500, { error: 'Internal Server Error' });
+        if (fileObject.name != '') {
+          const arrayBuffer = await fileObject.arrayBuffer();
+          const buffer = Buffer.from(new Uint8Array(arrayBuffer));
+          const fileID = generateRandomString(16, alphabet('A-Z', 'a-z', '0-9'));
+          await minio.putObject(
+            MINIO_BUCKET,
+            fileID,
+            buffer,
+            fileObject.size,
+            function (err: S3Error | null) {
+              if (err) {
+                return fail(500, { error: 'Internal Server Error' });
+              }
             }
-          }
-        );
-        postData.fileIDs.push(fileID);
+          );
+          postData.fileIDs.push(fileID);
+        }
       }
     } catch (error) {
       console.error(error);
