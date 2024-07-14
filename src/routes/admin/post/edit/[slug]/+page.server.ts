@@ -43,11 +43,10 @@ export const actions = {
     }
     const data = await request.formData();
 
-    if (!data.has('title') || !data.has('content') || !data.has('files') || !data.has('publish') || !data.has('id')) {
+    if (!data.has('title') || !data.has('content') || !data.has('id')) {
       return fail(400, { error: 'Bad Request' });
     }
     console.log(data);
-
 
     const postData: PostData = {
       id: data.get('id') as string,

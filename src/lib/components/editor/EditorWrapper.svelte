@@ -2,9 +2,15 @@
 	import EditorInit from '@tinymce/tinymce-svelte';
 	import type { Editor } from 'tinymce';
 
+	export let content: string | null = null;
+
 	const onEditorSetup = (editor: Editor) => {
+		console.log(content);
 		editor.on('change', () => {
 			editor.save();
+		});
+		editor.on('init', () => {
+			editor.setContent(content || '');
 		});
 	};
 </script>

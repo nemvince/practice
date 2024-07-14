@@ -43,8 +43,8 @@
 
 		return async ({ result }) => {
 			if (result.type === 'success') {
-				toast.success('Post created!');
-			} else if (result.type === 'error') {
+				toast.success(`Post ${publish ? 'published' : 'saved as draft'}!`);
+			} else if (result.type === 'failure') {
 				toast.error('Failed to create post');
 			}
 		};

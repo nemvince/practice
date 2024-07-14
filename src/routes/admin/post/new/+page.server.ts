@@ -9,6 +9,8 @@ import type { S3Error } from 'minio';
 
 export const actions = {
   default: async ({ request, cookies }) => {
+    console.log("i ran");
+
     const sessionId = cookies.get(lucia.sessionCookieName);
     if (!sessionId) {
       return fail(401, { error: 'No session found' });
@@ -19,11 +21,9 @@ export const actions = {
     }
     const data = await request.formData();
 
-    if (!data.has('title') || !data.has('content') || !data.has('files') || !data.has('publish')) {
+    if (!data.has('title') || !data.has('content') || !data.has('files')) {
       return fail(400, { error: 'Bad Request' });
     }
-    console.log(data);
-
 
     const postData: PostData = {
       id: generateRandomString(16, alphabet('A-Z', 'a-z', '0-9')),
