@@ -5,7 +5,6 @@
   export let content: string | null = null;
 
   const onEditorSetup = (editor: Editor) => {
-    console.log(content);
     editor.on('change', () => {
       editor.save();
     });

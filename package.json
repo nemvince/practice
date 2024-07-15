@@ -46,6 +46,7 @@
 		"@lucia-auth/adapter-prisma": "^4.0.1",
 		"@tinymce/tinymce-svelte": "^3.0.0",
 		"arctic": "^1.9.1",
+		"dayjs": "^1.11.11",
 		"minio": "^8.0.1",
 		"oslo": "^1.2.1",
 		"postgres": "^3.4.4",

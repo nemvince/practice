@@ -108,8 +108,6 @@ export const actions = {
       return fail(500, { error: "Database error" })
     }
 
-    console.log("changed post publish to " + post.published);
-    
     return {
       status: 200,
       body: post

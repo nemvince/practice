@@ -4,6 +4,10 @@
   export let data: PageData;
 </script>
 
+<svelte:head>
+  <title>Practice</title>
+</svelte:head>
+
 <div class="flex items-center justify-center">
   <pre>
 		{JSON.stringify(data, null, 2)}

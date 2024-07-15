@@ -34,7 +34,6 @@ export const actions = {
 
     try {
       const files = data.getAll('files');
-      console.log(files);
 
       for (const file of files) {
         const fileObject = file as File;
@@ -73,7 +72,6 @@ export const actions = {
         }
       });
 
-      console.log('Post created: ', post);
       return {
         status: 201,
         body: post

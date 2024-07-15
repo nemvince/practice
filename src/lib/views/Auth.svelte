@@ -4,6 +4,11 @@
   import Icon from '@iconify/svelte';
 </script>
 
+
+<svelte:head>
+  <title>Log in</title>
+</svelte:head>
+
 <div class="w-full h-screen">
   <div class="flex items-center justify-center h-full">
     <div class="bg-base-200 space-y-6 rounded-lg shadow-lg min-w-72 p-6">
