@@ -10,6 +10,7 @@
   let publish: false;
   let buttonText = 'Save as draft';
   let isLoading = false;
+  let postContent = '';
 
   $: buttonText = publish ? 'Publish' : 'Save as draft';
 
@@ -74,8 +75,8 @@
   </div>
 
   <div class="">
-    <textarea name="content" id="editor"></textarea>
-    <EditorWrapper />
+    <textarea name="content" class="hidden" bind:value={postContent}></textarea>
+    <EditorWrapper bind:content={postContent} />
   </div>
 
   <div class="flex justify-between">

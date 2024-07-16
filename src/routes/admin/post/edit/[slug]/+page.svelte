@@ -11,7 +11,9 @@
   let form: HTMLFormElement;
   let title = data.post.title;
   let publish = data.post.published;
-  let postContent = data.post.content;
+  let postContent = data.post.content || '';
+
+  $: console.log({ title, publish, postContent });
 </script>
 
 <svelte:head>
@@ -63,8 +65,8 @@
   </div>
 
   <div class="">
-    <textarea name="content" id="editor" class=""></textarea>
-    <EditorWrapper content={postContent} />
+    <textarea name="content" class="hidden" bind:value={postContent}></textarea>
+    <EditorWrapper bind:content={postContent} />
   </div>
 
   <div class="flex justify-end gap-3">

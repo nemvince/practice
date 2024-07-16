@@ -1,6 +1,7 @@
 import { error, type HttpError } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/server/db';
+import { carta } from '$lib/components/editor/carta';
 
 export const load: PageServerLoad = async ({ params }) => {
   const slug = params.slug as string;
@@ -25,7 +26,8 @@ export const load: PageServerLoad = async ({ params }) => {
       return error(404, { message: 'Post not found' });
     }
     return {
-      post: post
+      post: post,
+      rendered: await carta.render(post.content || '')
     };
   } catch (e) {
     if ((e as HttpError).status == 404) {

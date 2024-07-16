@@ -1,32 +1,11 @@
 <script lang="ts">
-  import EditorInit from '@tinymce/tinymce-svelte';
-  import type { Editor } from 'tinymce';
+  export let content: string = '';
 
-  export let content: string | null = null;
-
-  const onEditorSetup = (editor: Editor) => {
-    editor.on('change', () => {
-      editor.save();
-    });
-    editor.on('init', () => {
-      editor.setContent(content || '');
-      editor.save();
-    });
-  };
+  import { carta } from '$lib/components/editor/carta';
+  import { MarkdownEditor } from 'carta-md';
+  import '$lib/components/editor/theme.scss';
 </script>
 
-<EditorInit
-  cssClass="hidden"
-  scriptSrc="/editor/tinymce/tinymce.min.js"
-  conf={{
-    license_key: 'gpl',
-    selector: 'textarea#editor',
-    skin_url: '/editor/skins/ui/CUSTOM',
-    skin: 'CUSTOM',
-    content_css: '/editor/skins/content/CUSTOM/content.min.css',
-    promotion: false,
-    branding: false,
-    height: 800,
-    setup: onEditorSetup
-  }}
-/>
+<div class="bg-base-200 shadow-lg">
+  <MarkdownEditor {carta} bind:value={content} mode="tabs" theme="catppuccin-mocha" />
+</div>
