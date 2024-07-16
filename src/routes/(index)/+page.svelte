@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
 
-  import { goto } from '$app/navigation';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
   dayjs.extend(relativeTime);
@@ -35,6 +34,7 @@
         </div>
         <p>
           {#if san}
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html san.substring(0, 96) + (san.length > 96 ? '...' : '')}
           {:else}
             <p>Well, this post is empty...</p>

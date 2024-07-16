@@ -13,4 +13,4 @@ share your solutions for stuff
   - search
   - filter
   - upload solutions to already existing tasks
-- [] move to carta instead of tinymce
+- [x] move to carta instead of tinymce

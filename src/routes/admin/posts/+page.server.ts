@@ -1,10 +1,11 @@
 import { error, type HttpError } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from './$types';
+import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/server/db';
 import { lucia } from '$lib/server/auth';
 import { fail } from '@sveltejs/kit';
 import { minio } from '$lib/server/minio';
 import { MINIO_BUCKET } from '$env/static/private';
+import type { S3Error } from 'minio';
 
 export const load: PageServerLoad = async (event) => {
   try {
@@ -40,22 +41,26 @@ export const actions = {
     }
     const data = await request.formData();
 
-    if (!data.has("id")) {
+    if (!data.has('id')) {
       return fail(404, { error: 'No post ID' });
     }
 
-    const postId = data.get("id") as string
-    const post = await prisma.post.findUnique({ where: { id: postId } })
+    const postId = data.get('id') as string;
+    const post = await prisma.post.findUnique({ where: { id: postId } });
 
     if (!post) {
-      return fail(404, { error: "Post not found" })
+      return fail(404, { error: 'Post not found' });
     }
 
-    const files = post?.fileIDs
+    const files = post?.fileIDs;
     if (files.length > 0) {
       try {
-        minio.removeObjects(MINIO_BUCKET, files)
+        minio.removeObjects(MINIO_BUCKET, files);
       } catch (e) {
+        const error = e as S3Error;
+        if (error.code == 'NoSuchBucket') {
+          return fail(404, { error: 'Bucket not found' });
+        }
         return fail(500, { error: 'Internal Server Error' });
       }
     }
@@ -65,16 +70,20 @@ export const actions = {
         where: {
           id: postId
         }
-      })
+      });
     } catch (e) {
-      return fail(500, { error: "Database error" })
+      const error = e as HttpError;
+      if (error.status == 404) {
+        return fail(404, { error: 'Post not found' });
+      }
+      return fail(500, { error: 'Database error' });
     }
 
     return {
       status: 200
-    }
+    };
   },
-  changePublish: async ({request, cookies}) => {
+  changePublish: async ({ request, cookies }) => {
     const sessionId = cookies.get(lucia.sessionCookieName);
     if (!sessionId) {
       return fail(401, { error: 'No session found' });
@@ -85,15 +94,15 @@ export const actions = {
     }
     const data = await request.formData();
 
-    if (!data.has("id")) {
+    if (!data.has('id')) {
       return fail(404, { error: 'No post ID' });
     }
 
-    const postId = data.get("id") as string
-    const post = await prisma.post.findUnique({ where: { id: postId } })
+    const postId = data.get('id') as string;
+    const post = await prisma.post.findUnique({ where: { id: postId } });
 
     if (!post) {
-      return fail(404, { error: "Post not found" })
+      return fail(404, { error: 'Post not found' });
     }
     try {
       await prisma.post.update({
@@ -103,14 +112,18 @@ export const actions = {
         data: {
           published: !post.published
         }
-      })
+      });
     } catch (e) {
-      return fail(500, { error: "Database error" })
+      const error = e as HttpError;
+      if (error.status == 404) {
+        return fail(404, { error: 'Post not found' });
+      }
+      return fail(500, { error: 'Database error' });
     }
 
     return {
       status: 200,
       body: post
-    }
+    };
   }
-}
+};

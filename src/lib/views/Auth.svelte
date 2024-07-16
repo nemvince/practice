@@ -4,7 +4,6 @@
   import Icon from '@iconify/svelte';
 </script>
 
-
 <svelte:head>
   <title>Log in</title>
 </svelte:head>

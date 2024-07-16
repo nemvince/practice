@@ -1,13 +1,12 @@
 import { error, type HttpError } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { prisma } from '$lib/server/db';
-import { minio } from '$lib/server/minio';
 import { lucia } from '$lib/server/auth';
-import { alphabet, generateRandomString } from 'oslo/crypto';
 import type { Actions } from './$types';
 import { fail } from '@sveltejs/kit';
-import { MINIO_BUCKET } from '$env/static/private';
-import type { S3Error } from 'minio';
+// import { minio } from '$lib/server/minio';
+// import { MINIO_BUCKET } from '$env/static/private';
+// import type { S3Error } from 'minio';
 
 export const load: PageServerLoad = async ({ params }) => {
   const slug = params.slug as string;

@@ -1,13 +1,11 @@
 <script lang="ts">
   import type { PageServerData } from './$types';
-  import { Carta, Markdown } from 'carta-md';
   export let data: PageServerData;
 
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
   dayjs.extend(relativeTime);
 
-  import { carta } from '$lib/components/editor/carta';
   import { PreRendered } from 'carta-md';
 </script>
 

@@ -6,5 +6,5 @@ import { code } from '@cartamd/plugin-code';
 export const carta = new Carta({
   theme: 'catppuccin-mocha',
   sanitizer: false,
-  extensions: [emoji(), slash(), code()],
+  extensions: [emoji(), slash(), code({ theme: 'catppuccin-mocha' })]
 });

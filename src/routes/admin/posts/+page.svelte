@@ -90,7 +90,7 @@
             <form
               method="post"
               action="?/delete"
-              use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+              use:enhance={({ formData }) => {
                 formData.append('id', post.id);
 
                 return async ({ result }) => {
@@ -116,6 +116,7 @@
         <p>
           <!-- dirty hack -->
           {#if san}
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
             {@html san.substring(0, 96) + (san.length > 96 ? '...' : '')}
           {:else}
             <p>Congrats, you somehow made an empty post!</p>

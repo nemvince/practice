@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ params }) => {
     const post = await prisma.post.findUnique({
       where: {
         id: slug,
-        published: true,
+        published: true
       },
       include: {
         author: {
